@@ -1,10 +1,12 @@
 import ClientOnly from "@/components/client-only";
 import Jobschart, { JobsChartProps } from "@/components/cv/jobs-chart";
 import { Button } from "@/components/ui/button";
-import { mdiCity, mdiEarth, mdiEmail, mdiPhone } from "@mdi/js";
+import { mdiBriefcase, mdiCity, mdiEarth, mdiEmail, mdiPhone } from "@mdi/js";
 import Icon from "@mdi/react";
 import Image from "next/image";
 import Link from "next/link";
+
+import "./style.css";
 
 const data: JobsChartProps["data"] = [
   {
@@ -72,7 +74,7 @@ export default function ViewCVPage() {
         <div className="row-span-2 flex flex-col gap-6">
           <div className="grid grid-cols-3">
             <div className="flex flex-col">
-              <h4 className="scroll-m-20 text-lg font-semibold tracking-tight">
+              <h4 className="scroll-m-20 text-lg font-semibold tracking-tight text-gray-600">
                 Контактные данные
               </h4>
               <Link href="tel:79493432276" className="pt-2 align-middle">
@@ -98,7 +100,7 @@ export default function ViewCVPage() {
               </Link>
             </div>
             <div className="flex flex-col">
-              <h4 className="scroll-m-20 text-lg font-semibold tracking-tight">
+              <h4 className="scroll-m-20 text-lg font-semibold tracking-tight text-gray-600">
                 Место проживания
               </h4>
               <div className="pt-2 align-middle">
@@ -117,21 +119,25 @@ export default function ViewCVPage() {
                   color="#008aff"
                   className="inline"
                 />
-                <span className="pl-2 text-sm">Город: Москва</span>
+                <span className="pl-2 text-sm">
+                  Город: Москва (готов переехать){" "}
+                </span>
               </div>
             </div>
             <div className="flex flex-col">
-              <h4 className="scroll-m-20 text-lg font-semibold tracking-tight">
-                ??????????
+              <h4 className="scroll-m-20 text-lg font-semibold tracking-tight text-gray-600">
+                Доп. информация
               </h4>
               <div className="pt-2 align-middle">
                 <Icon
-                  path={mdiEarth}
+                  path={mdiBriefcase}
                   size={1}
                   color="#008aff"
                   className="inline"
                 />
-                <span className="pl-2 text-sm">???????</span>
+                <span className="pl-2 text-sm">
+                  Стаж: <b>1 год и 5 месяцев</b>
+                </span>
               </div>
               <div className="pt-2 align-middle">
                 <Icon
@@ -145,12 +151,66 @@ export default function ViewCVPage() {
             </div>
           </div>
           <div className="flex flex-col">
+            <h4 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+              Frontend-разработчик
+            </h4>
+            <div className="text-sm pt-2 text-muted-foreground">
+              Специализации:
+            </div>
+            <ul className="pl-4 list-inside dashed">
+              <li className="text-sm">Программист, разработчик</li>
+            </ul>
+            <div className="text-sm">
+              <span className="text-muted-foreground">Занятость: </span>
+              <span>полная занятость</span>
+            </div>
+            <div className="text-sm">
+              <span className="text-muted-foreground">График работы: </span>
+              <span>полная занятость</span>
+            </div>
+          </div>
+          <ul className="flex gap-2 text-muted-foreground">
+            <li className="text-sm p-2 bg-green-200 rounded">Java</li>
+            <li className="text-sm p-2 bg-gray-100 rounded">Java</li>
+            <li className="text-sm p-2 bg-gray-100 rounded">Java</li>
+            <li className="text-sm p-2 bg-gray-100 rounded">Java</li>
+          </ul>
+          <div className="flex flex-col">
             <ClientOnly>
               <Jobschart data={data} />
             </ClientOnly>
             <p className="text-xs text-muted-foreground self-end">
               Нажмите для подробной информации
             </p>
+          </div>
+          <div className="flex flex-col">
+            <h4 className="scroll-m-20 text-lg font-semibold tracking-tight text-gray-600">
+              Высшее образование
+            </h4>
+            <div className="pt-2 grid grid-cols-[120px_1fr] items-center gap-4 text-muted-foreground">
+              <p className="border-r pr-[40px]">2014</p>
+              <div className="pl-[36px] flex flex-col">
+                <p className="font-bold">
+                  Санкт-Петербургский государственный политехнический
+                  университет, Санкт-Петербург
+                </p>
+                <p>
+                  Институт физики, нанотехнологий и телекоммуникаций, Квантовая
+                  и оптическая электроника
+                </p>
+              </div>
+              <p className="border-r pr-[40px]">2014</p>
+              <div className="pl-[36px] flex flex-col">
+                <p className="font-bold">
+                  Санкт-Петербургский государственный политехнический
+                  университет, Санкт-Петербург
+                </p>
+                <p>
+                  Институт физики, нанотехнологий и телекоммуникаций, Квантовая
+                  и оптическая электроника
+                </p>
+              </div>
+            </div>
           </div>
         </div>
         <div>
