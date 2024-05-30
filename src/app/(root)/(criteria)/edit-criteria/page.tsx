@@ -2,7 +2,16 @@
 
 import TabSimple from "@/components/criteria/tab-simple";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EditCriteriaDto } from "@/lib/dto/edit-criteria.dto";
 import editCriteriaForm from "@/lib/forms/edit-criteria.form";
@@ -15,6 +24,8 @@ export default function EditCriteriaPage() {
   const form = useForm<z.infer<typeof editCriteriaForm>>({
     resolver: zodResolver(editCriteriaForm),
     defaultValues: {
+      name: "",
+      description: undefined,
       age: {
         min: undefined,
         max: undefined,
@@ -54,9 +65,39 @@ export default function EditCriteriaPage() {
       <main>
         <Form {...form}>
           <form
+            className="space-y-4"
             id="form"
             onSubmit={form.handleSubmit(handleSubmit, handleInvalid)}
           >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Должность</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Например: Frontend-разработчик"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Описание</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Дополнительные заметки" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Tabs defaultValue="simple">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="simple">Настройка</TabsTrigger>
