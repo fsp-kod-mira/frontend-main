@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -11,8 +13,11 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import UploadCVForm from "@/components/cv/upload-cv-form";
+import { useRouter } from "next/navigation";
 
 export default function UploadCVPage() {
+  const router = useRouter();
+
   return (
     <Card>
       <CardContent className="p-6 flex flex-col md:flex-row items-center">
@@ -34,7 +39,9 @@ export default function UploadCVPage() {
             </div>
           </CardHeader>
           <CardFooter className="flex justify-end gap-2">
-            <Button variant="outline">Отмена</Button>
+            <Button variant="outline" onClick={() => router.back()}>
+              Отмена
+            </Button>
             <Button>Загрузить</Button>
           </CardFooter>
         </div>

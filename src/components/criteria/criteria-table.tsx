@@ -30,7 +30,7 @@ export default function CriteriaTable() {
           <TableCell>54</TableCell>
           <TableCell className="text-right">
             <Button variant="outline" size="icon" asChild>
-              <Link href={`/edit-criteria`}>
+              <Link href={`/view-cv`}>
                 <Icon path={mdiEye} size={0.8} color="#008aff"></Icon>
               </Link>
             </Button>
