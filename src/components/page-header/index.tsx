@@ -26,7 +26,7 @@ export default function PageHeader() {
       menu: {
         active: pathname == "/",
       },
-      title: "Главная",
+      title: "Вакансии",
     },
   ];
 
