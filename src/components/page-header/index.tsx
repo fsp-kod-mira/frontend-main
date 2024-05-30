@@ -28,6 +28,15 @@ export default function PageHeader() {
       },
       title: "Вакансии",
     },
+    {
+      link: {
+        href: "/view-cv/all",
+      },
+      menu: {
+        active: pathname == "/view-cv/all",
+      },
+      title: "Кандидаты",
+    },
   ];
 
   return (
