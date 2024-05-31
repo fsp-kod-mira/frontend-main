@@ -1,6 +1,9 @@
 const dict = {
-  unknown: "Загрузка...",
-  admin: "Рекрутер",
+  unknown: "Неизвестно",
+  loading: "Загрузка...",
+  recruiter: "Рекрутер",
+  hiring_manager: "Нанимающий менеджер",
+  resource_manager: "Ресурсный менеджер",
 };
 
 export type Roles = keyof typeof dict;

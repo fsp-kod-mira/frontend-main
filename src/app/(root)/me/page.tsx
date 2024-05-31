@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 
 export default function MePage() {
   const [user, setUser] = useState<User>();
-  const [role, setRole] = useState<Roles>("unknown");
+  const [role, setRole] = useState<Roles>("loading");
 
   useEffect(() => {
     userStorageService.get().then((data) => {
@@ -31,8 +31,9 @@ export default function MePage() {
       firstName: "",
       middleName: "",
       lastName: "",
-      role: "unknown",
+      role: "loading",
     });
+    setRole("loading");
   }
 
   return (
