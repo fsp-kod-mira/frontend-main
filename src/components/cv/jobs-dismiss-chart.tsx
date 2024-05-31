@@ -1,44 +1,36 @@
 "use client";
 
-import { month } from "@/lib/utils";
 import ReactApexChart from "react-apexcharts";
-import { DataProps, dismissStats } from "./util";
+import { CVDto } from "@/lib/dto/cv.dto";
+import { dismissStatsPerSeason } from "./util";
 
-export default function JobsDismissChart(props: DataProps) {
+type JobsDismissChartProps = {
+  className?: string;
+  data: CVDto["jobs"];
+};
+
+export default function JobsDismissChart(props: JobsDismissChartProps) {
   const state = {
-    series: [
-      {
-        name: "Увольнений",
-        data: dismissStats(props.data),
-      },
-    ],
+    series: dismissStatsPerSeason(props.data),
     options: {
       chart: {
-        height: 350,
-        type: "line",
-        zoom: {
-          enabled: false,
+        width: 380,
+        type: "pie",
+      },
+      labels: ["Зима", "Весна", "Лето", "Осень"],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200,
+            },
+            legend: {
+              position: "bottom",
+            },
+          },
         },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        curve: "straight",
-      },
-      title: {
-        text: "Статистика увольнений",
-        align: "left",
-      },
-      grid: {
-        row: {
-          colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-          opacity: 0.5,
-        },
-      },
-      xaxis: {
-        categories: month,
-      },
+      ],
     },
   };
 
@@ -47,7 +39,7 @@ export default function JobsDismissChart(props: DataProps) {
       className={props.className}
       options={state.options}
       series={state.series}
-      type="line"
+      type="pie"
       height={350}
     />
   );

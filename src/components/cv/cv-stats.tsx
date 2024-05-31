@@ -7,8 +7,9 @@ import CVStatsBlock from "./cv-stats-block";
 import { DataProps } from "./util";
 import { CVDto } from "@/lib/dto/cv.dto";
 import moment from "moment";
+import JobsDismissChart from "./jobs-dismiss-chart";
 
-type Tabs = "chart" | "text";
+type Tabs = "chart" | "text" | "dismiss";
 
 type CVStatsProps = {
   data: CVDto["jobs"];
@@ -74,6 +75,14 @@ export default function CVStats(props: CVStatsProps) {
       </Button>
       <Button
         variant="link"
+        className={tab === "dismiss" ? "" : "text-muted-foreground"}
+        size="sm"
+        onClick={() => setTab("dismiss")}
+      >
+        Увольнения
+      </Button>
+      <Button
+        variant="link"
         className={tab === "text" ? "" : "text-muted-foreground"}
         size="sm"
         onClick={() => setTab("text")}
@@ -94,6 +103,16 @@ export default function CVStats(props: CVStatsProps) {
         <p className="text-xs text-muted-foreground self-end">
           Нажмите для подробной информации
         </p>
+      </>
+    );
+  } else if (tab == "dismiss") {
+    return (
+      <>
+        {tabSelector}
+        <div className="flex flex-col lg:flex-row">
+          <CVStatsBlock className="max-w-80 pr-6 py-4" data={props.data} />
+          <JobsDismissChart className="flex-grow" data={props.data} />
+        </div>
       </>
     );
   } else {

@@ -58,3 +58,13 @@ export const totalJobTime = (data: CVDto["jobs"]) => {
   const periods = data.map((d) => d.end - d.start);
   return periods.reduce((a, b) => a + b);
 };
+
+export const dismissStatsPerSeason = (data: CVDto["jobs"]) => {
+  const stats = dismissStats(data);
+  const winter = stats[0] + stats[1] + stats[11]; // Январь, февраль, декабрь
+  const spring = stats[2] + stats[3] + stats[4]; // Март, апрель, май
+  const summer = stats[5] + stats[6] + stats[7]; // Июнь, июль, август
+  const fall = stats[8] + stats[9] + stats[10]; // Сентябрь, октябрь, ноябрь
+
+  return [winter, spring, summer, fall];
+};
