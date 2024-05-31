@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { Button } from "../ui/button";
-import Jobschart, { JobsChartProps } from "./jobs-chart";
-import ClientOnly from "../client-only";
+import Jobschart from "./jobs-chart";
+import CVStatsBlock from "./cv-stats-block";
+import { DataProps } from "./util";
 
-type Tabs = "chart" | "stats" | "text";
+type Tabs = "chart" | "text";
 
-const data1: JobsChartProps["data"] = [
+const data1: DataProps["data"] = [
   {
     company: "Raiffeisenbank",
     position: "Программист Java",
@@ -67,14 +68,6 @@ export default function CVStats() {
       </Button>
       <Button
         variant="link"
-        className={tab === "stats" ? "" : "text-muted-foreground"}
-        size="sm"
-        onClick={() => setTab("stats")}
-      >
-        Статистика
-      </Button>
-      <Button
-        variant="link"
         className={tab === "text" ? "" : "text-muted-foreground"}
         size="sm"
         onClick={() => setTab("text")}
@@ -88,9 +81,10 @@ export default function CVStats() {
     return (
       <>
         {tabSelector}
-        <ClientOnly>
-          <Jobschart data={data1} />
-        </ClientOnly>
+        <div className="flex flex-col lg:flex-row">
+          <CVStatsBlock className="max-w-80 pr-6 py-4" data={data1} />
+          <Jobschart className="flex-grow" data={data1} />
+        </div>
         <p className="text-xs text-muted-foreground self-end">
           Нажмите для подробной информации
         </p>
@@ -99,6 +93,4 @@ export default function CVStats() {
   } else {
     return <>{tabSelector}</>;
   }
-
-  // return ()
 }

@@ -135,7 +135,9 @@ export default function ViewCVPage() {
             <li className="text-sm p-2 bg-gray-100 rounded">Java</li>
           </ul>
           <div className="flex flex-col">
-            <CVStats />
+            <ClientOnly>
+              <CVStats />
+            </ClientOnly>
           </div>
           <div className="flex flex-col">
             <h4 className="scroll-m-20 text-lg font-semibold tracking-tight text-gray-600">

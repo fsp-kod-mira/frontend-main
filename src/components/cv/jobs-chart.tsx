@@ -12,19 +12,11 @@ import {
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { selectColorFromHash } from "@/lib/utils";
+import { DataProps } from "./util";
 
-export type JobsChartProps = {
-  data: {
-    company: string;
-    position: string;
-    description?: string;
-    range: number[];
-  }[];
-};
-
-export default function Jobschart(props: JobsChartProps) {
+export default function Jobschart(props: DataProps) {
   const [alertOpened, setAlertOpened] = useState(false);
-  const [job, setJob] = useState<JobsChartProps["data"][0]>();
+  const [job, setJob] = useState<DataProps["data"][0]>();
 
   const state = {
     series: [
@@ -72,6 +64,7 @@ export default function Jobschart(props: JobsChartProps) {
   return (
     <>
       <ReactApexChart
+        className={props.className}
         // @ts-ignore
         options={state.options}
         series={state.series}
