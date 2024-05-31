@@ -7,8 +7,14 @@ import {
 } from "./util";
 import moment from "moment";
 import "moment/locale/ru";
+import { CVDto } from "@/lib/dto/cv.dto";
 
-export default function CVStatsBlock(props: DataProps) {
+type CVStatsBlockProps = {
+  className?: string;
+  data: CVDto["jobs"];
+};
+
+export default function CVStatsBlock(props: CVStatsBlockProps) {
   moment.locale("ru");
 
   const maxMonthIndex = maxDismissMonth(props.data);

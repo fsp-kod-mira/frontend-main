@@ -5,8 +5,14 @@ import { Button } from "../ui/button";
 import Jobschart from "./jobs-chart";
 import CVStatsBlock from "./cv-stats-block";
 import { DataProps } from "./util";
+import { CVDto } from "@/lib/dto/cv.dto";
+import moment from "moment";
 
 type Tabs = "chart" | "text";
+
+type CVStatsProps = {
+  data: CVDto["jobs"];
+};
 
 const data1: DataProps["data"] = [
   {
@@ -52,7 +58,7 @@ const data1: DataProps["data"] = [
   },
 ];
 
-export default function CVStats() {
+export default function CVStats(props: CVStatsProps) {
   const [tab, setTab] = useState<Tabs>("chart");
 
   const tabSelector = (
@@ -82,8 +88,8 @@ export default function CVStats() {
       <>
         {tabSelector}
         <div className="flex flex-col lg:flex-row">
-          <CVStatsBlock className="max-w-80 pr-6 py-4" data={data1} />
-          <Jobschart className="flex-grow" data={data1} />
+          <CVStatsBlock className="max-w-80 pr-6 py-4" data={props.data} />
+          <Jobschart className="flex-grow" data={props.data} />
         </div>
         <p className="text-xs text-muted-foreground self-end">
           Нажмите для подробной информации
@@ -91,6 +97,32 @@ export default function CVStats() {
       </>
     );
   } else {
-    return <>{tabSelector}</>;
+    return (
+      <>
+        {tabSelector}
+        <div className="pt-2 grid grid-cols-[200px_1fr] items-center gap-4">
+          {props.data.map((d) => {
+            const startStr = moment(d.start).format("MMMM YYYY");
+            const endStr =
+              d.end > 0 ? moment(d.end).format("MMMM YYYY") : "по наст. время";
+
+            return (
+              <>
+                <p className="border-r pr-[40px] text-muted-foreground">
+                  {startStr} - {endStr}
+                </p>
+                <div className="pl-[36px] flex flex-col">
+                  <p className="font-bold">{d.position}</p>
+                  <p>{d.company}</p>
+                  <p className="pt-2 text-muted-foreground whitespace-pre-line">
+                    {d.description}
+                  </p>
+                </div>
+              </>
+            );
+          })}
+        </div>
+      </>
+    );
   }
 }

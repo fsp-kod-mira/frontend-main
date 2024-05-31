@@ -1,3 +1,5 @@
+import { CVDto } from "@/lib/dto/cv.dto";
+
 export type DataProps = {
   className?: string;
   data: {
@@ -8,8 +10,8 @@ export type DataProps = {
   }[];
 };
 
-export const dismissStats = (data: DataProps["data"]) => {
-  const endDates = data.map((d) => d.range[1]);
+export const dismissStats = (data: CVDto["jobs"]) => {
+  const endDates = data.map((d) => d.end);
   const months = endDates.map((d) => new Date(d).getMonth());
 
   let chartData = Array.from(Array(12).fill(0));
@@ -26,23 +28,23 @@ export const dismissStats = (data: DataProps["data"]) => {
   return chartData as number[];
 };
 
-export const maxDismissMonth = (data: DataProps["data"]) => {
+export const maxDismissMonth = (data: CVDto["jobs"]) => {
   const stats = dismissStats(data);
   return stats.indexOf(Math.max(...stats));
 };
 
-export const avgDuration = (data: DataProps["data"]) => {
-  const periods = data.map((d) => d.range[1] - d.range[0]);
+export const avgDuration = (data: CVDto["jobs"]) => {
+  const periods = data.map((d) => d.end - d.start);
   return periods.reduce((a, b) => a + b, 0) / periods.length;
 };
 
-export const maxRestDuration = (data: DataProps["data"]) => {
+export const maxRestDuration = (data: CVDto["jobs"]) => {
   const periods: number[] = [];
   data.forEach((d, i) => {
     if (i == 0) return;
 
-    const prevEndDate = data[i - 1].range[1];
-    const currentStartDate = data[i].range[0];
+    const prevEndDate = data[i - 1].end;
+    const currentStartDate = data[i].start;
     const diff = currentStartDate - prevEndDate;
     periods.push(diff);
   });
@@ -50,4 +52,9 @@ export const maxRestDuration = (data: DataProps["data"]) => {
   const max = Math.max(...periods);
   if (max < 2592000) return 0;
   return max;
+};
+
+export const totalJobTime = (data: CVDto["jobs"]) => {
+  const periods = data.map((d) => d.end - d.start);
+  return periods.reduce((a, b) => a + b);
 };

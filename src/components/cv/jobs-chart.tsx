@@ -13,18 +13,24 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { selectColorFromHash } from "@/lib/utils";
 import { DataProps } from "./util";
+import { CVDto } from "@/lib/dto/cv.dto";
 
-export default function Jobschart(props: DataProps) {
+type JobsChartBlockProps = {
+  className?: string;
+  data: CVDto["jobs"];
+};
+
+export default function Jobschart(props: JobsChartBlockProps) {
   const [alertOpened, setAlertOpened] = useState(false);
-  const [job, setJob] = useState<DataProps["data"][0]>();
+  const [job, setJob] = useState<JobsChartBlockProps["data"][0]>();
 
   const state = {
     series: [
       {
         data: props.data.map((e) => ({
           x: e.company,
-          y: e.range,
-          fillColor: selectColorFromHash(e.range),
+          y: [e.start, e.end],
+          fillColor: selectColorFromHash([e.start, e.end]),
         })),
       },
     ],

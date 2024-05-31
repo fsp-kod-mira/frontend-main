@@ -5,20 +5,37 @@ import { mdiBriefcase, mdiCity, mdiEarth, mdiEmail, mdiPhone } from "@mdi/js";
 import Icon from "@mdi/react";
 import Image from "next/image";
 import Link from "next/link";
+import CVStats from "@/components/cv/cv-stats";
+import useRepository from "@/hooks/repository";
+import moment from "moment";
+import { totalJobTime } from "@/components/cv/util";
+import "moment/locale/ru";
 
 import "./style.css";
-import CVStats from "@/components/cv/cv-stats";
 
-export default function ViewCVPage() {
+export default async function ViewCVPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  moment.locale("ru");
+
+  const { api } = useRepository();
+  const cv = await api.cv.get(params.id);
+  const birthday = moment(cv.birthday).format("DD.MM.YYYY");
+  const age = moment().diff(cv.birthday, "years");
+
+  const jobTime = moment.duration(totalJobTime(cv.jobs)).humanize();
+
   return (
     <div className="pt-4 flex flex-col gap-4">
       <header className="flex flex-col gap-4 md:gap-0 md:flex-row md:justify-between items-center">
         <div className="flex flex-col gap-2">
           <h1 className="scroll-m-20 text-xl font-extrabold tracking-tight lg:text-3xl">
-            Шмураков Константин Русланович
+            {cv.lastName} {cv.firstName} {cv.middleName}
           </h1>
           <p className="text-sm text-muted-foreground">
-            Мужчина, 19 лет (дата рождения 02.05.2005)
+            {cv.gender}, {age} лет (дата рождения {birthday})
           </p>
         </div>
         <div className="actions flex gap-2">
@@ -36,14 +53,14 @@ export default function ViewCVPage() {
               <h4 className="scroll-m-20 text-lg font-semibold tracking-tight text-gray-600">
                 Контактные данные
               </h4>
-              <Link href="tel:79493432276" className="pt-2 align-middle">
+              <Link href={`tel:${cv.phone}`} className="pt-2 align-middle">
                 <Icon
                   path={mdiPhone}
                   size={1}
                   color="#008aff"
                   className="inline"
                 />
-                <span className="pl-2 text-sm">+7 (949) 343-22-76</span>
+                <span className="pl-2 text-sm">{cv.phone}</span>
               </Link>
               <Link
                 href="mailto:kostya.shmurakov@mail.ru"
@@ -55,7 +72,7 @@ export default function ViewCVPage() {
                   color="#008aff"
                   className="inline"
                 />
-                <span className="pl-2 text-sm">kostya.shmurakov@mail.ru</span>
+                <span className="pl-2 text-sm">{cv.email}</span>
               </Link>
             </div>
             <div className="flex flex-col">
@@ -69,7 +86,7 @@ export default function ViewCVPage() {
                   color="#008aff"
                   className="inline"
                 />
-                <span className="pl-2 text-sm">Страна: Россия</span>
+                <span className="pl-2 text-sm">Страна: {cv.country}</span>
               </div>
               <div className="pt-2 align-middle">
                 <Icon
@@ -79,7 +96,8 @@ export default function ViewCVPage() {
                   className="inline"
                 />
                 <span className="pl-2 text-sm">
-                  Город: Москва (готов переехать){" "}
+                  Город: {cv.city}
+                  {cv.transfer ? " (готов переехать)" : ""}
                 </span>
               </div>
             </div>
@@ -95,7 +113,7 @@ export default function ViewCVPage() {
                   className="inline"
                 />
                 <span className="pl-2 text-sm">
-                  Стаж: <b>1 год и 5 месяцев</b>
+                  Стаж: <b>{jobTime}</b>
                 </span>
               </div>
               <div className="pt-2 align-middle">
@@ -111,61 +129,57 @@ export default function ViewCVPage() {
           </div>
           <div className="flex flex-col">
             <h4 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-              Frontend-разработчик
+              {cv.position}
             </h4>
             <div className="text-sm pt-2 text-muted-foreground">
               Специализации:
             </div>
             <ul className="pl-4 list-inside dashed">
-              <li className="text-sm">Программист, разработчик</li>
+              {cv.specializations.map((s, i) => (
+                <li className="text-sm" key={i}>
+                  {s}
+                </li>
+              ))}
             </ul>
             <div className="text-sm">
               <span className="text-muted-foreground">Занятость: </span>
-              <span>полная занятость</span>
+              {cv.employment.map((s, i) => (
+                <span key={i}>{s}</span>
+              ))}
             </div>
             <div className="text-sm">
               <span className="text-muted-foreground">График работы: </span>
-              <span>полная занятость</span>
+              {cv.schedule.map((s, i) => (
+                <span key={i}>{s}</span>
+              ))}
             </div>
           </div>
           <ul className="flex gap-2 text-muted-foreground">
-            <li className="text-sm p-2 bg-green-200 rounded">Java</li>
-            <li className="text-sm p-2 bg-gray-100 rounded">Java</li>
-            <li className="text-sm p-2 bg-gray-100 rounded">Java</li>
-            <li className="text-sm p-2 bg-gray-100 rounded">Java</li>
+            {cv.skills.map((s, i) => (
+              <li className="text-sm p-2 bg-gray-100 rounded" key={i}>
+                {s}
+              </li>
+            ))}
           </ul>
           <div className="flex flex-col">
             <ClientOnly>
-              <CVStats />
+              <CVStats data={cv.jobs} />
             </ClientOnly>
           </div>
           <div className="flex flex-col">
             <h4 className="scroll-m-20 text-lg font-semibold tracking-tight text-gray-600">
-              Высшее образование
+              Образование
             </h4>
             <div className="pt-2 grid grid-cols-[120px_1fr] items-center gap-4 text-muted-foreground">
-              <p className="border-r pr-[40px]">2014</p>
-              <div className="pl-[36px] flex flex-col">
-                <p className="font-bold">
-                  Санкт-Петербургский государственный политехнический
-                  университет, Санкт-Петербург
-                </p>
-                <p>
-                  Институт физики, нанотехнологий и телекоммуникаций, Квантовая
-                  и оптическая электроника
-                </p>
-              </div>
-              <p className="border-r pr-[40px]">2014</p>
-              <div className="pl-[36px] flex flex-col">
-                <p className="font-bold">
-                  Санкт-Петербургский государственный политехнический
-                  университет, Санкт-Петербург
-                </p>
-                <p>
-                  Институт физики, нанотехнологий и телекоммуникаций, Квантовая
-                  и оптическая электроника
-                </p>
-              </div>
+              {cv.education.map((e) => (
+                <>
+                  <p className="border-r pr-[40px]">{e.years}</p>
+                  <div className="pl-[36px] flex flex-col">
+                    <p className="font-bold">{e.name}</p>
+                    <p>{e.description}</p>
+                  </div>
+                </>
+              ))}
             </div>
           </div>
         </div>
