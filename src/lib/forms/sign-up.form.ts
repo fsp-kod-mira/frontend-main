@@ -2,10 +2,15 @@ import { z } from "zod";
 
 export default z
   .object({
-    name: z.string().min(4),
+    lastName: z.string(),
+    firstName: z.string(),
+    middleName: z.string(),
+
+    email: z.string().email(),
     password: z.string().min(6),
     confirm: z.string().min(6),
-    email: z.string().email(),
+
+    role: z.enum(["recruiter", "hiring_manager", "resource_manager"]),
   })
   .refine((data) => data.password === data.confirm, {
     message: "Пароли не совпадают!",
