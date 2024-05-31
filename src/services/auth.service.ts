@@ -1,11 +1,11 @@
 import { SignInDto } from "@/lib/dto/auth.dto";
-import { API_URL } from "@/lib/env";
+import { GATEWAY_URL } from "@/lib/env";
 import { AuthResult } from "@/types/auth.type";
 import { User } from "@/types/user.type";
 
 class AuthService {
   async signIn(data: SignInDto): Promise<AuthResult> {
-    const result = await fetch(`${API_URL}/auth/`, {
+    const result = await fetch(`${GATEWAY_URL}/auth/sign-in`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -15,33 +15,35 @@ class AuthService {
       return Promise.reject(result);
     }
 
-    const authResult = (await result.json()) as AuthResult;
+    const authResult = (await result.json()).data as AuthResult;
     return Promise.resolve(authResult);
   }
 
   async refresh(data: AuthResult): Promise<AuthResult> {
-    const result = await fetch(`${API_URL}/auth/refresh`, {
+    const result = await fetch(`${GATEWAY_URL}/auth/refresh`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${data.refresh_token.token}`,
       },
+      body: JSON.stringify({
+        refreshToken: data.refreshToken,
+      }),
     });
 
     if (!result.ok) {
       return Promise.reject(result);
     }
 
-    const authResult = (await result.json()) as AuthResult;
+    const authResult = (await result.json()).data as AuthResult;
     return Promise.resolve(authResult);
   }
 
   async getMe(data: AuthResult): Promise<User> {
-    const result = await fetch(`${API_URL}/auth/me`, {
+    const result = await fetch(`${GATEWAY_URL}/profile`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${data.access_token.token}`,
+        Authorization: `Bearer ${data.accessToken}`,
       },
     });
 
@@ -49,8 +51,23 @@ class AuthService {
       return Promise.reject(result);
     }
 
-    const user = (await result.json()) as User;
+    const user = (await result.json()).data as User;
     return Promise.resolve(user);
+  }
+
+  async signout(data: AuthResult): Promise<boolean> {
+    const result = await fetch(`${GATEWAY_URL}/auth/sign-out`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${data.accessToken}`,
+      },
+    });
+
+    if (!result.ok) {
+      return Promise.reject(result);
+    }
+    return true;
   }
 }
 

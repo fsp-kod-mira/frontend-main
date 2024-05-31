@@ -1,2 +1,2 @@
-export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://example.com/";
+export const GATEWAY_URL =
+  process.env.NEXT_PUBLIC_GATEWAY_URL || "https://example.com/";

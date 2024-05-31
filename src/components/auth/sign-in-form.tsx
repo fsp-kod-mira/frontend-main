@@ -50,7 +50,7 @@ export default function SignInForm() {
 
       toast({
         title: "Вход выполнен",
-        description: `Добро пожаловать, ${user.name}!`,
+        description: `Добро пожаловать, ${user.firstName}!`,
       });
       router.push("/");
     } catch (e) {

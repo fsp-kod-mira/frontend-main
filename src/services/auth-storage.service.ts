@@ -1,5 +1,6 @@
 import { CookieOpts, CookieService } from "./cookie.service";
 import { AuthResult } from "@/types/auth.type";
+import { jwtDecode } from "jwt-decode";
 
 class AuthStorageService extends CookieService {
   constructor() {
@@ -11,7 +12,9 @@ class AuthStorageService extends CookieService {
     if (!authResult)
       throw Error("Failed to get auth data. Maybe you are not authorized.");
 
-    const expires = authResult.access_token.expires;
+    const accessToken = authResult.accessToken;
+    const jwtData = jwtDecode(accessToken);
+    const expires = jwtData.exp!;
     const now = Math.round(Date.now() / 1000);
     return expires - now <= 0;
   }

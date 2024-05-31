@@ -23,7 +23,8 @@ function signin(request: NextRequest, authResult: AuthResult | null) {
   return NextResponse.redirect(new URL("/", request.nextUrl));
 }
 
-async function signout(request: NextRequest) {
+async function signout(request: NextRequest, authResult: AuthResult) {
+  await authService.signout(authResult);
   const response = NextResponse.redirect(new URL("/signin", request.nextUrl));
   const handler = new CookieResponseHandler(response);
   await authStorageService.remove({ cookieHandler: handler });
@@ -61,7 +62,7 @@ export async function middleware(request: NextRequest) {
     return signin(request, authResult);
   }
   if (request.nextUrl.pathname == "/signout") {
-    return await signout(request);
+    return await signout(request, authResult!);
   }
 
   if (!authResult)
