@@ -49,8 +49,8 @@ export default function EditCriteriaPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex justify-between items-center">
-        <h1 className="scroll-m-20 text-xl font-extrabold tracking-tight lg:text-3xl">
+      <header className="flex flex-col gap-4 md:gap-0 md:flex-row md:justify-between items-center">
+        <h1 className="scroll-m-20 text-xl text-center md:text-left font-extrabold tracking-tight lg:text-3xl">
           Редактирование шаблона &quot;Frontend-разработчик&quot;
         </h1>
         <div className="actions flex gap-2">

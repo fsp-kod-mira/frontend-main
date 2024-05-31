@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function HomePage() {
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex justify-between items-center">
+      <header className="flex flex-col gap-4 md:gap-0 md:flex-row md:justify-between items-center">
         <h1 className="scroll-m-20 text-xl font-extrabold tracking-tight lg:text-3xl">
           Текущие вакансии
         </h1>

@@ -19,29 +19,37 @@ export default function CVPage(props: CVPageProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex justify-between items-center">
-        <h1 className="scroll-m-20 text-xl font-extrabold tracking-tight lg:text-3xl">
+      <header className="flex flex-col gap-4 md:gap-0 md:flex-row md:justify-between items-center">
+        <h1 className="scroll-m-20 text-xl text-center md:text-left font-extrabold tracking-tight lg:text-3xl">
           Соискатели {vacant_s}
         </h1>
-        <div className="actions flex gap-2">
-          {props.vacant ? (
-            <Button variant="outline" onClick={() => router.back()}>
-              Назад
+        <div className="actions flex gap-2 flex-col md:flex-row">
+          <div className="flex justify-between items-center gap-2">
+            {props.vacant ? (
+              <Button variant="outline" onClick={() => router.back()}>
+                Назад
+              </Button>
+            ) : (
+              <></>
+            )}
+            <CVSortSelect />
+          </div>
+          <div className="flex justify-between items-center gap-2">
+            <Button variant="outline">Фильтры (0)</Button>
+            <Button className="hidden md:block" variant="outline" size="icon">
+              <Icon path={mdiMagnify} size={0.9} />
             </Button>
-          ) : (
-            <></>
-          )}
-          <CVSortSelect />
-          <Button variant="outline">Фильтры (0)</Button>
-          <Button variant="outline" size="icon">
-            <Icon path={mdiMagnify} size={0.9} />
-          </Button>
+            <Button className="flex-grow md:hidden" variant="outline">
+              <Icon path={mdiMagnify} size={0.9} />
+              Поиск
+            </Button>
+          </div>
           <Button asChild>
             <Link href="/upload-cv">Загрузить резюме</Link>
           </Button>
         </div>
       </header>
-      <div className="grid grid-cols-[300px_1fr] gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-4">
         <CVCategories />
         <CVTable />
       </div>

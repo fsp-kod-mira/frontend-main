@@ -18,8 +18,10 @@ export default function CVTable() {
       <TableHeader>
         <TableRow>
           <TableHead>Должность</TableHead>
-          <TableHead>Опыт работы</TableHead>
-          <TableHead>Последнее место работы</TableHead>
+          <TableHead className="hidden md:table-cell">Опыт работы</TableHead>
+          <TableHead className="hidden md:table-cell">
+            Последнее место работы
+          </TableHead>
           <TableHead>Метрика</TableHead>
           <TableHead className="text-right">Действия</TableHead>
         </TableRow>
@@ -27,8 +29,12 @@ export default function CVTable() {
       <TableBody>
         <TableRow>
           <TableCell>Frontend-разработчик</TableCell>
-          <TableCell>1 год и 5 месяцев</TableCell>
-          <TableCell>Tinkoff - Automation QA</TableCell>
+          <TableCell className="hidden md:table-cell">
+            1 год и 5 месяцев
+          </TableCell>
+          <TableCell className="hidden md:table-cell">
+            Tinkoff - Automation QA
+          </TableCell>
           <TableCell>
             <Badge className="bg-green-500">95.8</Badge>
           </TableCell>
@@ -42,8 +48,12 @@ export default function CVTable() {
         </TableRow>
         <TableRow>
           <TableCell>Frontend-разработчик</TableCell>
-          <TableCell>1 год и 5 месяцев</TableCell>
-          <TableCell>Tinkoff - Automation QA</TableCell>
+          <TableCell className="hidden md:table-cell">
+            1 год и 5 месяцев
+          </TableCell>
+          <TableCell className="hidden md:table-cell">
+            Tinkoff - Automation QA
+          </TableCell>
           <TableCell>
             <Badge className="bg-green-500">95.8</Badge>
           </TableCell>

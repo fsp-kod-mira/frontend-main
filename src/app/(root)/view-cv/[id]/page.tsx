@@ -12,7 +12,7 @@ import CVStats from "@/components/cv/cv-stats";
 export default function ViewCVPage() {
   return (
     <div className="pt-4 flex flex-col gap-4">
-      <header className="flex justify-between items-center">
+      <header className="flex flex-col gap-4 md:gap-0 md:flex-row md:justify-between items-center">
         <div className="flex flex-col gap-2">
           <h1 className="scroll-m-20 text-xl font-extrabold tracking-tight lg:text-3xl">
             Шмураков Константин Русланович
@@ -29,9 +29,9 @@ export default function ViewCVPage() {
           <Button>Button 3</Button>
         </div>
       </header>
-      <main className="pt-4 grid grid-cols-[1fr_200px] gap-4">
-        <div className="row-span-2 flex flex-col gap-6">
-          <div className="grid grid-cols-3">
+      <main className="pt-4 grid grid-cols-1 md:grid-cols-[1fr_200px] gap-4">
+        <div className="order-2 md:order-1 row-span-2 flex flex-col gap-6">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-0">
             <div className="flex flex-col">
               <h4 className="scroll-m-20 text-lg font-semibold tracking-tight text-gray-600">
                 Контактные данные
@@ -167,7 +167,7 @@ export default function ViewCVPage() {
             </div>
           </div>
         </div>
-        <div>
+        <div className="flex justify-center order-1 md:order-2">
           <Image
             className="rounded"
             width="200"
