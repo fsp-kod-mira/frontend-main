@@ -28,7 +28,7 @@ export default async function ViewCVPage({
 }) {
   moment.locale("ru");
 
-  async function test(id: string, state: boolean) {
+  async function addToFavorite(id: string, state: boolean) {
     "use server";
 
     const { api } = useRepository();
@@ -41,6 +41,11 @@ export default async function ViewCVPage({
   const age = moment().diff(cv.birthday, "years");
 
   const jobTime = moment.duration(totalJobTime(cv.jobs)).humanize();
+  const addToFavoriteCallback = addToFavorite.bind(
+    null,
+    params.id,
+    !cv.favorite
+  );
 
   return (
     <div className="pt-4 flex flex-col gap-4">
@@ -57,7 +62,7 @@ export default async function ViewCVPage({
           <Button variant="outline" asChild>
             <Link href="/view-cv">Назад</Link>
           </Button>
-          <form action={test(params.id, !cv.favorite)}>
+          <form action={addToFavoriteCallback}>
             <Button variant={cv.favorite ? "default" : "outline"}>
               <Icon path={mdiStar} size={1} className="pr-2" />
               {cv.favorite ? "В избранном" : "В избранное"}
