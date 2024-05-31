@@ -15,10 +15,6 @@ export default function HomePage() {
           <Button asChild>
             <Link href="/edit-criteria">Создать</Link>
           </Button>
-          <Button variant="outline">Фильтры (0)</Button>
-          <Button variant="outline" size="icon">
-            <Icon path={mdiMagnify} size={0.9} />
-          </Button>
         </div>
       </header>
       <div className="grid grid-cols-[1fr] gap-4">
