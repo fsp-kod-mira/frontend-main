@@ -1,7 +1,14 @@
 import ClientOnly from "@/components/client-only";
 import Jobschart from "@/components/cv/jobs-chart";
 import { Button } from "@/components/ui/button";
-import { mdiBriefcase, mdiCity, mdiEarth, mdiEmail, mdiPhone } from "@mdi/js";
+import {
+  mdiBriefcase,
+  mdiCity,
+  mdiEarth,
+  mdiEmail,
+  mdiFolder,
+  mdiPhone,
+} from "@mdi/js";
 import Icon from "@mdi/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -118,12 +125,12 @@ export default async function ViewCVPage({
               </div>
               <div className="pt-2 align-middle">
                 <Icon
-                  path={mdiCity}
+                  path={mdiFolder}
                   size={1}
                   color="#008aff"
                   className="inline"
                 />
-                <span className="pl-2 text-sm">????????</span>
+                <span className="pl-2 text-sm">{cv.status}</span>
               </div>
             </div>
           </div>

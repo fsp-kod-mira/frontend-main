@@ -14,6 +14,8 @@ export default class CVModule extends MockModule {
   async get(id: string): Promise<CVDto> {
     return {
       id,
+      uploader_id: "",
+      status: "Прошел интервью",
       firstName: "Константин",
       lastName: "Шмураков",
       middleName: "Русланович",
@@ -27,7 +29,8 @@ export default class CVModule extends MockModule {
       city: "Москва",
       transfer: true,
 
-      specializations: ["Frontend-разработчик"],
+      position: "Frontend-разработчик",
+      specializations: ["Программист, разработчик"],
       employment: ["полная занятость"],
       schedule: ["полный день"],
 

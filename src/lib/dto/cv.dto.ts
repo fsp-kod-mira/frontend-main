@@ -1,5 +1,7 @@
 export type CVDto = {
   id: string;
+  uploader_id: string;
+  status: string;
 
   firstName: string;
   lastName: string;
