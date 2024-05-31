@@ -8,6 +8,9 @@ import Icon from "@mdi/react";
 import CVCategories from "./cv-categories";
 import CVTable from "./cv-table";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import userStorageService from "@/services/user-storage.service";
+import { Roles } from "@/lib/role";
 
 type CVPageProps = {
   vacant?: string;
@@ -16,6 +19,13 @@ type CVPageProps = {
 export default function CVPage(props: CVPageProps) {
   const vacant_s = props.vacant ? `на должность "${props.vacant}"` : "(список)";
   const router = useRouter();
+
+  const [role, setRole] = useState<Roles>();
+  useEffect(() => {
+    userStorageService.get().then((data) => {
+      setRole(data!.role);
+    });
+  }, [setRole]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -44,9 +54,13 @@ export default function CVPage(props: CVPageProps) {
               Поиск
             </Button>
           </div>
-          <Button asChild>
-            <Link href="/upload-cv">Загрузить резюме</Link>
-          </Button>
+          {role != "resource_manager" ? (
+            <Button asChild>
+              <Link href="/upload-cv">Загрузить резюме</Link>
+            </Button>
+          ) : (
+            <></>
+          )}
         </div>
       </header>
       <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-4">
