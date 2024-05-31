@@ -1,5 +1,4 @@
 import ClientOnly from "@/components/client-only";
-import Jobschart from "@/components/cv/jobs-chart";
 import { Button } from "@/components/ui/button";
 import {
   mdiBriefcase,
@@ -8,6 +7,7 @@ import {
   mdiEmail,
   mdiFolder,
   mdiPhone,
+  mdiStar,
 } from "@mdi/js";
 import Icon from "@mdi/react";
 import Image from "next/image";
@@ -19,6 +19,7 @@ import { totalJobTime } from "@/components/cv/util";
 import "moment/locale/ru";
 
 import "./style.css";
+import CVActionDropdown from "@/components/cv/cv-action-dropdown";
 
 export default async function ViewCVPage({
   params,
@@ -26,6 +27,13 @@ export default async function ViewCVPage({
   params: { id: string };
 }) {
   moment.locale("ru");
+
+  async function test(id: string, state: boolean) {
+    "use server";
+
+    const { api } = useRepository();
+    await api.cv.favorite(id, state);
+  }
 
   const { api } = useRepository();
   const cv = await api.cv.get(params.id);
@@ -49,8 +57,14 @@ export default async function ViewCVPage({
           <Button variant="outline" asChild>
             <Link href="/view-cv">Назад</Link>
           </Button>
-          <Button variant="outline">Button 2</Button>
-          <Button>Button 3</Button>
+          <form action={test(params.id, !cv.favorite)}>
+            <Button variant={cv.favorite ? "default" : "outline"}>
+              <Icon path={mdiStar} size={1} className="pr-2" />
+              {cv.favorite ? "В избранном" : "В избранное"}
+            </Button>
+          </form>
+
+          <CVActionDropdown />
         </div>
       </header>
       <main className="pt-4 grid grid-cols-1 md:grid-cols-[1fr_200px] gap-4">
@@ -178,10 +192,12 @@ export default async function ViewCVPage({
               Образование
             </h4>
             <div className="pt-2 grid grid-cols-[120px_1fr] items-center gap-4 text-muted-foreground">
-              {cv.education.map((e) => (
+              {cv.education.map((e, i) => (
                 <>
-                  <p className="border-r pr-[40px]">{e.years}</p>
-                  <div className="pl-[36px] flex flex-col">
+                  <p className="border-r pr-[40px]" key={i}>
+                    {e.years}
+                  </p>
+                  <div className="pl-[36px] flex flex-col" key={i}>
                     <p className="font-bold">{e.name}</p>
                     <p>{e.description}</p>
                   </div>

@@ -15,6 +15,7 @@ export default class CVModule extends MockModule {
     return {
       id,
       uploader_id: "",
+      favorite: false,
       status: "Прошел интервью",
       firstName: "Константин",
       lastName: "Шмураков",
@@ -66,5 +67,10 @@ export default class CVModule extends MockModule {
         },
       ],
     };
+  }
+
+  async favorite(id: string, state: boolean): Promise<boolean> {
+    console.log("CALL" + state);
+    return state;
   }
 }

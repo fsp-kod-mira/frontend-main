@@ -2,6 +2,7 @@ export type CVDto = {
   id: string;
   uploader_id: string;
   status: string;
+  favorite: boolean;
 
   firstName: string;
   lastName: string;
