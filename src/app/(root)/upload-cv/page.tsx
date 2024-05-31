@@ -14,9 +14,44 @@ import {
 import Image from "next/image";
 import UploadCVForm from "@/components/cv/upload-cv-form";
 import { useRouter } from "next/navigation";
+import { hhImport } from "./util";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
 
 export default function UploadCVPage() {
   const router = useRouter();
+
+  const [alert, setAlert] = React.useState<boolean>(false);
+  const [url, setUrl] = React.useState<string>();
+  const [urlPending, setUrlPending] = React.useState<boolean>(false);
+
+  const parseHh = async () => {
+    try {
+      setUrlPending(true);
+      const result = await fetch(`/upload-cv/parse?url=${url}`);
+      console.log(result);
+    } catch (e) {
+    } finally {
+      setAlert(false);
+      setUrlPending(false);
+    }
+  };
 
   return (
     <Card>
@@ -39,12 +74,52 @@ export default function UploadCVPage() {
             </div>
           </CardHeader>
           <CardFooter className="flex justify-end gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button type="button" variant="outline">
+                  Импорт...
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>
+                    <Button variant="ghost" onClick={() => setAlert(true)}>
+                      hh.ru
+                    </Button>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Button variant="outline" onClick={() => router.back()}>
               Отмена
             </Button>
             <Button>Загрузить</Button>
           </CardFooter>
         </div>
+        <AlertDialog open={alert} onOpenChange={setAlert}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Введите ссылку на резюме</AlertDialogTitle>
+              <AlertDialogDescription>
+                <Input
+                  name="url"
+                  id="url"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                />
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={urlPending}>
+                Отмена
+              </AlertDialogCancel>
+              <Button onClick={async () => parseHh()} disabled={urlPending}>
+                {urlPending ? "Загрузка" : "Продолжить"}
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </CardContent>
     </Card>
   );
