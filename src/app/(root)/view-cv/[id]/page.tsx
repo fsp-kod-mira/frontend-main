@@ -20,6 +20,7 @@ import "moment/locale/ru";
 
 import "./style.css";
 import CVActionDropdown from "@/components/cv/cv-action-dropdown";
+import { Fragment } from "react";
 
 export default async function ViewCVPage({
   params,
@@ -198,15 +199,13 @@ export default async function ViewCVPage({
             </h4>
             <div className="pt-2 grid grid-cols-[120px_1fr] items-center gap-4 text-muted-foreground">
               {cv.education.map((e, i) => (
-                <>
-                  <p className="border-r pr-[40px]" key={i}>
-                    {e.years}
-                  </p>
-                  <div className="pl-[36px] flex flex-col" key={i}>
+                <Fragment key={i}>
+                  <p className="border-r pr-[40px]">{e.years}</p>
+                  <div className="pl-[36px] flex flex-col">
                     <p className="font-bold">{e.name}</p>
                     <p>{e.description}</p>
                   </div>
-                </>
+                </Fragment>
               ))}
             </div>
           </div>
