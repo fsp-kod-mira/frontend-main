@@ -6,21 +6,21 @@ export default z.object({
   status: z.string(),
   favorite: z.boolean(),
 
-  firstName: z.string(),
-  lastName: z.string(),
-  middleName: z.string(),
+  firstName: z.string().min(2),
+  lastName: z.string().min(2),
+  middleName: z.string().min(2),
 
   gender: z.string(),
   birthday: z.string(),
 
-  phone: z.string(),
-  email: z.string(),
+  phone: z.string().min(2),
+  email: z.string().min(2),
 
-  country: z.string(),
-  city: z.string(),
+  country: z.string().min(2),
+  city: z.string().min(2),
   transfer: z.boolean(),
 
-  position: z.string(),
+  position: z.string().min(2),
   specializations: z.array(z.string()),
   employment: z.array(z.string()),
   schedule: z.array(z.string()),
