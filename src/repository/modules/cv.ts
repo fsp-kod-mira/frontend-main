@@ -1,8 +1,15 @@
 import { PaginatedResult } from "@/types/result.type";
-import { MockModule } from "..";
+import { HttpModule } from "..";
 import { CVDto } from "@/lib/dto/cv.dto";
 
-export default class CVModule extends MockModule {
+export default class CVModule extends HttpModule {
+  async upload(data: FormData): Promise<any> {
+    const result = await this.call("POST", "/cv", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return result.data;
+  }
+
   async getAll(): Promise<PaginatedResult<CVDto>> {
     return {
       data: [],

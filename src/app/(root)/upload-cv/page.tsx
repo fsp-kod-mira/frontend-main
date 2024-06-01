@@ -14,7 +14,6 @@ import {
 import Image from "next/image";
 import UploadCVForm from "@/components/cv/upload-cv-form";
 import { useRouter } from "next/navigation";
-import { hhImport } from "./util";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -94,7 +93,9 @@ export default function UploadCVPage() {
             <Button variant="outline" onClick={() => router.back()}>
               Отмена
             </Button>
-            <Button>Загрузить</Button>
+            <Button form="form" type="submit">
+              Загрузить
+            </Button>
           </CardFooter>
         </div>
         <AlertDialog open={alert} onOpenChange={setAlert}>

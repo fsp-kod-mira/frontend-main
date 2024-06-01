@@ -10,7 +10,7 @@ export type Repository = {
 export default function useRepository() {
   const modules: Repository = {
     users: new UsersModule(api),
-    cv: new CVModule(),
+    cv: new CVModule(api),
   };
   return { api: modules };
 }
