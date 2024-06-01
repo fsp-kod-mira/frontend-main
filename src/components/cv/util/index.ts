@@ -73,3 +73,16 @@ export const dismissStatsPerSeason = (data: CVDto["jobs"]) => {
 
   return [winter, spring, summer, fall];
 };
+
+export const metricColor = (avg: number, value: number) => {
+  const diff = value - avg;
+  console.log(diff);
+
+  if (diff < -20) {
+    return "#FF5733";
+  } else if (diff >= -20 && diff <= 20) {
+    return "#FFC300";
+  } else {
+    return "#22c55e";
+  }
+};

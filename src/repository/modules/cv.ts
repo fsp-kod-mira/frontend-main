@@ -27,4 +27,8 @@ export default class CVModule extends HttpModule {
     console.log("CALL" + state);
     return state;
   }
+
+  async avgMetric(): Promise<number> {
+    return cv.map((c) => c.metric).reduce((a, b) => a + b, 0) / cv.length;
+  }
 }
