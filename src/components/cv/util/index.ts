@@ -76,7 +76,6 @@ export const dismissStatsPerSeason = (data: CVDto["jobs"]) => {
 
 export const metricColor = (avg: number, value: number) => {
   const diff = value - avg;
-  console.log(diff);
 
   if (diff < -20) {
     return "#FF5733";

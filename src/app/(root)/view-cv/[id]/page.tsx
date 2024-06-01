@@ -45,7 +45,6 @@ export default async function ViewCVPage({
   }
 
   const { api } = useRepository();
-  console.log("ID", params.id);
 
   const cv = await api.cv.get(params.id);
   const avg = await api.cv.avgMetric();
