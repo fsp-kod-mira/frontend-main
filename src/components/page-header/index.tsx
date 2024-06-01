@@ -1,7 +1,3 @@
-"use client";
-
-import { usePathname } from "next/navigation";
-import NavigationMenu, { type NavigationLink } from "./navigation-menu";
 import {
   Sheet,
   SheetContent,
@@ -14,25 +10,15 @@ import Icon from "@mdi/react";
 import { mdiMenu } from "@mdi/js";
 import CurrentTime from "./current-time";
 import UserProfile from "./user-profile";
+import userStorageService from "@/services/user-storage.service";
+import Links from "./links";
 
-export default function PageHeader() {
-  const pathname = usePathname();
-
-  const links: NavigationLink[] = [
-    {
-      link: {
-        href: "/",
-      },
-      menu: {
-        active: pathname == "/",
-      },
-      title: "Главная",
-    },
-  ];
+export default async function PageHeader() {
+  const user = await userStorageService.get();
 
   return (
     <header className="flex justify-between items-center p-2 px-6 border-b bg-stone-800">
-      <NavigationMenu className="hidden md:flex" links={links} />
+      <Links className="hidden md:flex" role={user!.role} />
 
       <Sheet>
         <SheetTrigger className="flex md:hidden" asChild>
@@ -46,7 +32,7 @@ export default function PageHeader() {
         <SheetContent side="left" className="w-64 block md:hidden">
           <SheetHeader className="items-center">
             <SheetTitle className="mb-4">Меню</SheetTitle>
-            <NavigationMenu links={links} column />
+            <Links role={user!.role} column />
           </SheetHeader>
         </SheetContent>
       </Sheet>

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import * as Dropdown from "@/components/ui/dropdown-menu";
 import * as AlertDialog from "@/components/ui/alert-dialog";
 import Icon from "@mdi/react";
-import { mdiLogout } from "@mdi/js";
+import { mdiAccount, mdiLogout } from "@mdi/js";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { User } from "@/types/user.type";
@@ -21,17 +21,27 @@ export default function UserProfile() {
   }, [setUser]);
   if (!user) return <div className="h-10 w-10"></div>;
 
-  const letters = initials(user.name);
   return (
     <>
       <Dropdown.DropdownMenu>
         <Dropdown.DropdownMenuTrigger>
           <Avatar>
-            <AvatarFallback>{letters}</AvatarFallback>
+            <AvatarFallback>
+              {user.lastName[0]}
+              {user.firstName[0]}
+            </AvatarFallback>
           </Avatar>
         </Dropdown.DropdownMenuTrigger>
         <Dropdown.DropdownMenuContent>
-          <Dropdown.DropdownMenuLabel>{user.name}</Dropdown.DropdownMenuLabel>
+          <Dropdown.DropdownMenuLabel>
+            {user.firstName}
+          </Dropdown.DropdownMenuLabel>
+          <Dropdown.DropdownMenuItem asChild>
+            <Link href="/me">
+              <Icon path={mdiAccount} size={0.7} />
+              Профиль
+            </Link>
+          </Dropdown.DropdownMenuItem>
           <Dropdown.DropdownMenuSeparator />
           <Dropdown.DropdownMenuItem onClick={() => setDialogOpened(true)}>
             <Icon path={mdiLogout} size={0.7} />

@@ -1,11 +1,11 @@
 import axios from "axios";
-import { API_URL } from "./env";
+import { GATEWAY_URL } from "./env";
 import authStorageService from "@/services/auth-storage.service";
 import authService from "@/services/auth.service";
 import { redirect } from "next/navigation";
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: GATEWAY_URL,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
@@ -19,7 +19,7 @@ api.interceptors.request.use(async (config) => {
 
   const authResult = await authStorageService.get();
   if (authResult) {
-    config.headers.Authorization = `Bearer ${authResult.access_token.token}`;
+    config.headers.Authorization = `Bearer ${authResult.accessToken}`;
   }
   return config;
 });
@@ -47,7 +47,7 @@ api.interceptors.response.use(
 
         originalRequest.headers[
           "Authorization"
-        ] = `Bearer ${authResultRefreshed.access_token.token}`;
+        ] = `Bearer ${authResultRefreshed.accessToken}`;
         originalRequest.headers["X-Skip-Token"] = `1`;
 
         return api.request(originalRequest);

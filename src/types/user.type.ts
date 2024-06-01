@@ -1,5 +1,9 @@
+import { Roles } from "@/lib/role";
+
 export type User = {
-  id: number;
-  name: string;
   email: string;
+  lastName: string;
+  firstName: string;
+  middleName: string;
+  role: Roles;
 };
