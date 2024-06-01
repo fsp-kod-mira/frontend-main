@@ -243,7 +243,7 @@ export default async function ViewCVPage({
             className="rounded"
             width="200"
             height="300"
-            src="/images/user-placeholder.png"
+            src="/images/me.png"
             alt="Фотография претендента"
           />
         </div>
