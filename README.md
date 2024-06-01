@@ -1,13 +1,13 @@
-# react-auth-template
+# fsp-kod-mira-frontend
 
-Шаблон приложения на NextJS с встроенной авторизацией и регистрацией
+> Разработано с ❤ by mzhn-team
 
-⚠ Приложение требует API-сервер, см. необходимую схему в `openapi.yaml` или [онлайн-просмотр](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/hackaton-templates/react-auth-template/main/openapi.yaml)
-
-✅ [Подходящий шаблон API-сервера](https://github.com/hackaton-templates/nest-auth-template) на NestJS
+Frontend приложения для работы с CV.
 
 ## Использованные библиотеки:
 
+- [React](https://reactjs.com/)
+- [NextJS](https://nextjs.com/) - React-фреймворк
 - [TailwindCSS](https://tailwindcss.com/) - UI-фреймворк
 - [@shancn/ui](https://ui.shadcn.com/) - UI-компоненты
 - [@mdi/react](https://pictogrammers.com/library/mdi/) - Набор иконок Material Design
@@ -17,25 +17,25 @@
 
 ## Getting Started
 
-First, setup environment variables (see `.env.example`):
+Вначале необходимо задать переменные среды (см. `.env.example`):
 
 ```
-NEXT_PUBLIC_API_URL=
+NEXT_PUBLIC_GATEWAY_URL=
 ```
 
-Then, run the development server:
+Затем, запустите отладочный сервер:
 
 ```bash
 npm run dev
-# or
+# или
 yarn dev
-# or
+# или
 pnpm dev
-# or
+# или
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте [http://localhost:3000](http://localhost:3000) в браузере чтобы увидеть результат.
 
 ## Learn More
 
@@ -45,9 +45,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
