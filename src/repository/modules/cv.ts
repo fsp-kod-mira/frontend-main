@@ -55,8 +55,8 @@ export default class CVModule extends MockModule {
         Создание и поддержка микросервиса каталога складских позиций, управление каталогом товаров.
         
         Java 11, Spring, Kafka, CI/CD, PostgreSQL, Jenkins,Grafana, Git, микросервисы`,
-          start: new Date("2017-12-01").getTime(),
-          end: new Date("2022-12-01").getTime(),
+          start: "2017-12-01",
+          end: "2022-12-01",
         },
       ],
       education: [

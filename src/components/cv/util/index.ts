@@ -1,4 +1,5 @@
 import { CVDto } from "@/lib/dto/cv.dto";
+import moment from "moment";
 
 export type DataProps = {
   className?: string;
@@ -11,7 +12,7 @@ export type DataProps = {
 };
 
 export const dismissStats = (data: CVDto["jobs"]) => {
-  const endDates = data.map((d) => d.end);
+  const endDates = data.map((d) => +moment(d.end).format("x"));
   const months = endDates.map((d) => new Date(d).getMonth());
 
   let chartData = Array.from(Array(12).fill(0));
@@ -34,7 +35,9 @@ export const maxDismissMonth = (data: CVDto["jobs"]) => {
 };
 
 export const avgDuration = (data: CVDto["jobs"]) => {
-  const periods = data.map((d) => d.end - d.start);
+  const periods = data.map(
+    (d) => +moment(d.end).format("x") - +moment(d.start).format("x")
+  );
   return periods.reduce((a, b) => a + b, 0) / periods.length;
 };
 
@@ -43,8 +46,8 @@ export const maxRestDuration = (data: CVDto["jobs"]) => {
   data.forEach((d, i) => {
     if (i == 0) return;
 
-    const prevEndDate = data[i - 1].end;
-    const currentStartDate = data[i].start;
+    const prevEndDate = +moment(data[i - 1].end).format("x");
+    const currentStartDate = +moment(data[i].start).format("x");
     const diff = currentStartDate - prevEndDate;
     periods.push(diff);
   });
@@ -55,7 +58,9 @@ export const maxRestDuration = (data: CVDto["jobs"]) => {
 };
 
 export const totalJobTime = (data: CVDto["jobs"]) => {
-  const periods = data.map((d) => d.end - d.start);
+  const periods = data.map(
+    (d) => +moment(d.end).format("x") - +moment(d.start).format("x")
+  );
   return periods.reduce((a, b) => a + b);
 };
 

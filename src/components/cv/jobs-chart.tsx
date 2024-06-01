@@ -14,6 +14,7 @@ import { useState } from "react";
 import { selectColorFromHash } from "@/lib/utils";
 import { DataProps } from "./util";
 import { CVDto } from "@/lib/dto/cv.dto";
+import moment from "moment";
 
 type JobsChartBlockProps = {
   className?: string;
@@ -29,8 +30,11 @@ export default function Jobschart(props: JobsChartBlockProps) {
       {
         data: props.data.map((e) => ({
           x: e.company,
-          y: [e.start, e.end],
-          fillColor: selectColorFromHash([e.start, e.end]),
+          y: [+moment(e.start).format("x"), +moment(e.end).format("x")],
+          fillColor: selectColorFromHash([
+            +moment(e.start).format("x"),
+            +moment(e.end).format("x"),
+          ]),
         })),
       },
     ],
