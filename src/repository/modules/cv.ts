@@ -20,7 +20,7 @@ export default class CVModule extends HttpModule {
   }
 
   async get(id: string): Promise<CVDto> {
-    return cv[0];
+    return cv.find((c) => c.id == id)!;
   }
 
   async favorite(id: string, state: boolean): Promise<boolean> {

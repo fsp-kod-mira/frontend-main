@@ -15,7 +15,7 @@ import Link from "next/link";
 import CVStats from "@/components/cv/cv-stats";
 import useRepository from "@/hooks/repository";
 import moment from "moment";
-import { totalJobTime } from "@/components/cv/util";
+import { metricColor, totalJobTime } from "@/components/cv/util";
 import "moment/locale/ru";
 
 import "./style.css";
@@ -45,7 +45,10 @@ export default async function ViewCVPage({
   }
 
   const { api } = useRepository();
+  console.log("ID", params.id);
+
   const cv = await api.cv.get(params.id);
+  const avg = await api.cv.avgMetric();
   const birthday = moment(cv.birthday).format("DD.MM.YYYY");
   const age = moment().diff(cv.birthday, "years");
 
@@ -94,7 +97,12 @@ export default async function ViewCVPage({
                 <AccordionTrigger>
                   <div>
                     Метрика:
-                    <Badge className="ml-2 bg-green-500">{cv.metric}</Badge>
+                    <Badge
+                      className="ml-1"
+                      style={{ backgroundColor: metricColor(avg, cv.metric) }}
+                    >
+                      {cv.metric}
+                    </Badge>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
