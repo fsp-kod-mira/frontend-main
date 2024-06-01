@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import Jobschart from "./jobs-chart";
 import CVStatsBlock from "./cv-stats-block";
-import { DataProps } from "./util";
 import { CVDto } from "@/lib/dto/cv.dto";
 import moment from "moment";
 import JobsDismissChart from "./jobs-dismiss-chart";
@@ -79,7 +78,9 @@ export default function CVStats(props: CVStatsProps) {
           {props.data.map((d) => {
             const startStr = moment(d.start).format("MMMM YYYY");
             const endStr =
-              d.end > 0 ? moment(d.end).format("MMMM YYYY") : "по наст. время";
+              +moment(d.end).format("x") > 0
+                ? moment(d.end).format("MMMM YYYY")
+                : "по наст. время";
 
             return (
               <>
