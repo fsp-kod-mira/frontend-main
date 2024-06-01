@@ -21,6 +21,14 @@ import "moment/locale/ru";
 import "./style.css";
 import CVActionDropdown from "@/components/cv/cv-action-dropdown";
 import { Fragment } from "react";
+import { Badge } from "@/components/ui/badge";
+import {
+  AccordionItem,
+  Accordion,
+  AccordionContent,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import MetricChartContainer from "@/components/cv/metric-chart-container";
 
 export default async function ViewCVPage({
   params,
@@ -75,6 +83,26 @@ export default async function ViewCVPage({
       </header>
       <main className="pt-4 grid grid-cols-1 md:grid-cols-[1fr_200px] gap-4">
         <div className="order-2 md:order-1 row-span-2 flex flex-col gap-6">
+          <div className="flex">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full"
+              defaultValue="item-1"
+            >
+              <AccordionItem value="item-1">
+                <AccordionTrigger>
+                  <div>
+                    Метрика:
+                    <Badge className="ml-2 bg-green-500">{cv.metric}</Badge>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <MetricChartContainer id={params.id} />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-0">
             <div className="flex flex-col">
               <h4 className="scroll-m-20 text-lg font-semibold tracking-tight text-gray-600">

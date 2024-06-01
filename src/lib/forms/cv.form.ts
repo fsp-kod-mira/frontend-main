@@ -5,6 +5,7 @@ export default z.object({
   uploader_id: z.string(),
   status: z.string(),
   favorite: z.boolean(),
+  metric: z.number().default(0),
 
   firstName: z.string().min(2),
   lastName: z.string().min(2),
